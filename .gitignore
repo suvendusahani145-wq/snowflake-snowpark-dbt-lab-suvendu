@@ -1,0 +1,24 @@
+# Security & Credentials
+.dbt/
+*.pem
+*.key
+profiles.yml
+.env
+.env.*
+
+# Large Data & Datasets (>100MB files fail GitHub push)
+csv files/
+*.csv
+
+# Logs & DBT Build Targets
+logs/
+target/
+**/logs/
+**/target/
+**/dbt_packages/
+
+# OS & IDE Files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

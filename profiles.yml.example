@@ -1,0 +1,14 @@
+zomato:
+  outputs:
+    dev:
+      type: snowflake
+      account: <YOUR_SNOWFLAKE_ACCOUNT_ID>
+      user: <YOUR_SNOWFLAKE_USER>
+      role: DBT_ROLE
+      warehouse: ZOMATO_WH
+      database: ZOMATO
+      schema: RAW
+      threads: 8
+      private_key_path: <PATH_TO_RSA_KEY>
+      private_key_passphrase: null
+  target: dev
