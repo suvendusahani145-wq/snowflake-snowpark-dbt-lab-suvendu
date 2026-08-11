@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: stg_food
+    columns:
+      - name: FOOD_ID
+        tests:
+          - not_null
+          - unique
+      - name: FOOD_NAME
+      - name: VEG_OR_NON_VEG
