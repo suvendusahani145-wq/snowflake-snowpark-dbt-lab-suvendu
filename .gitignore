@@ -1,3 +1,11 @@
+# Python Virtual Environments
+venv/
+**/venv/
+.venv/
+**/.venv/
+__pycache__/
+*.pyc
+
 # Security & Credentials - Exclude private keys
 *.pem
 *.key
