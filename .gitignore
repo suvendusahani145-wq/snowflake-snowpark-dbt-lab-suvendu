@@ -1,21 +1,17 @@
-# Security & Credentials
-.dbt/
+# Security & Credentials - Exclude private keys
 *.pem
 *.key
-profiles.yml
 .env
 .env.*
 
-# Large Data & Datasets (>100MB files fail GitHub push)
-csv files/
-*.csv
+# Large Full Datasets (>100MB)
+*_full.csv
 
 # Logs & DBT Build Targets
-logs/
 target/
-**/logs/
 **/target/
 **/dbt_packages/
+*.log
 
 # OS & IDE Files
 .DS_Store

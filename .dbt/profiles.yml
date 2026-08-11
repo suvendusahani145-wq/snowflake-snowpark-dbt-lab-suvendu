@@ -1,0 +1,27 @@
+my_project:
+  outputs:
+    dev:
+      account: XHUDPNG-VG76535
+      database: CUSTOMER
+      private_key_path: C:\Users\suven\.dbt
+      role: ACCOUNTADMIN
+      schema: CUST_SCHEMA_BRONZE
+      threads: 4
+      type: snowflake
+      user: SSAHANI
+      warehouse: COMPUTE_WH
+  target: dev
+zomato:
+  outputs:
+    dev:
+      account: XHUDPNG-VG76535
+      database: ZOMATO
+      private_key_passphrase: null
+      private_key_path: C:\Users\suven\.dbt
+      role: DBT_ROLE
+      schema: RAW
+      threads: 8
+      type: snowflake
+      user: SSAHANI
+      warehouse: ZOMATO_WH
+  target: dev
