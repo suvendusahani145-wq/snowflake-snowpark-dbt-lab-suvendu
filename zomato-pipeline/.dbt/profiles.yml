@@ -1,27 +1,14 @@
-my_project:
-  outputs:
-    dev:
-      account: XHUDPNG-VG76535
-      database: CUSTOMER
-      private_key_path: C:\Users\suven\.dbt
-      role: ACCOUNTADMIN
-      schema: CUST_SCHEMA_BRONZE
-      threads: 4
-      type: snowflake
-      user: SSAHANI
-      warehouse: COMPUTE_WH
-  target: dev
 zomato:
   outputs:
     dev:
-      account: XHUDPNG-VG76535
-      database: ZOMATO
-      private_key_passphrase: null
-      private_key_path: C:\Users\suven\.dbt
+      type: snowflake
+      account: <YOUR_SNOWFLAKE_ACCOUNT_ID>
+      user: <YOUR_SNOWFLAKE_USER>
       role: DBT_ROLE
+      warehouse: ZOMATO_WH
+      database: ZOMATO
       schema: RAW
       threads: 8
-      type: snowflake
-      user: SSAHANI
-      warehouse: ZOMATO_WH
+      private_key_path: <PATH_TO_RSA_KEY>
+      private_key_passphrase: null
   target: dev
