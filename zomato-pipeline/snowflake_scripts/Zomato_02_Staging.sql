@@ -1,0 +1,46 @@
+use ZOMATO;
+
+USE WAREHOUSE ZOMATO_WH;
+
+USE SCHEMA ZOMATO.RAW;
+
+
+SHOW INTEGRATIONS;
+
+
+CREATE OR REPLACE STORAGE INTEGRATION  Zomato_s3_int
+  TYPE = EXTERNAL_STAGE
+  STORAGE_PROVIDER = 'S3'
+  ENABLED = TRUE
+  STORAGE_AWS_ROLE_ARN = 'arn:aws:iam::381061952291:role/snowflake_s3_role'
+  STORAGE_ALLOWED_LOCATIONS = ('s3://zomato-data-engineering-aug2026/');
+
+
+  
+
+  GRANT USAGE ON INTEGRATION Zomato_s3_int to role dbt_role;
+
+
+  CREATE OR REPLACE FILE FORMAT CSV_FMT
+  TYPE = 'CSV'
+  COMPRESSION = 'AUTO'
+  FIELD_DELIMITER = ','
+  FIELD_OPTIONALLY_ENCLOSED_BY = '"'
+  SKIP_HEADER = 1
+  EMPTY_FIELD_AS_NULL = TRUE
+  NULL_IF = ('', '\\N', 'NULL')
+  TRIM_SPACE = FALSE
+  ERROR_ON_COLUMN_COUNT_MISMATCH = FALSE;
+
+  GRANT CREATE FILE FORMAT ON SCHEMA ZOMATO.RAW TO ROLE DBT_ROL
+
+  
+create or replace stage  ZOMATO.RAW.zomato_stage
+URL='s3://zomato-data-engineering-aug2026'
+STORAGE_INTEGRATION = Zomato_s3_int
+FILE_FORMAT = 'CSV_FMT';
+
+
+desc integration ZOMATO_S3_INT;
+list @zomato_stage;
+
