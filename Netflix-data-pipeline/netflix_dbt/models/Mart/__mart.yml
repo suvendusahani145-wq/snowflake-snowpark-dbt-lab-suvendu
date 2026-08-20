@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: mart_r_movies
+    description: "Movie mart table with genre and release year information"
+
+    columns:
+      - name: MOVIEID
+        tests:
+          - unique
+          - not_null
+
+      - name: MOVIE_NAME
+        tests:
+          - not_null
+
+  - name: mart_ratings
+    description: "Rating mart table"
+
+    columns:
+      - name: RATING_YEAR
+        tests:
+          - not_null

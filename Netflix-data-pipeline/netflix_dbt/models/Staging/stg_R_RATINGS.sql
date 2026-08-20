@@ -1,0 +1,9 @@
+select
+    movieid,
+    RATING,
+    RATING_TIMESTAMP,
+    cast(rating_timestamp as date) as rating_date,
+    EXTRACT(DAY FROM RATING_TIMESTAMP) AS RATING_DAY,
+    EXTRACT(MONTH FROM RATING_TIMESTAMP) AS RATING_MONTH,
+    EXTRACT(YEAR FROM RATING_TIMESTAMP) AS RATING_YEAR
+    FROM {{ref('Bronze_R_RATINGS')}}

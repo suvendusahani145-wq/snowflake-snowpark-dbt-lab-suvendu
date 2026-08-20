@@ -1,0 +1,28 @@
+version: 2
+
+sources:
+  - name: Bronze
+    database: NETFLIX
+    schema: RAW
+
+    tables:
+      - name: R_MOVIES
+        description: "This table stores the movie details"
+
+        columns:
+          - name: MOVIEID
+            tests:
+              - not_null
+              - unique
+
+      - name: R_RATINGS
+        description: "This table stores movie ratings"
+
+      - name: r_genome_tags
+        description: "This table stores tag detail"
+
+      - name: r_genome_scores
+        description: "This table stores movie and tag relevance detail"
+
+      - name: R_TAGS
+        description: "This table stores user, movie and tag related data"
