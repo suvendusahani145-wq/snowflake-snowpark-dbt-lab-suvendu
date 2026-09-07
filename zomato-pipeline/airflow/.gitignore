@@ -1,0 +1,5 @@
+# Airflow runtime ignored directories & files
+pgdata/
+logs/
+__pycache__/
+*.pyc
