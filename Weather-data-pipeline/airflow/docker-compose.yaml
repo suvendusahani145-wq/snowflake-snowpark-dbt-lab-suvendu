@@ -1,0 +1,59 @@
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=airflow
+      - POSTGRES_PASSWORD=airflow
+      - POSTGRES_DB=airflow
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+
+  webserver:
+    build: .
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+      - AIRFLOW__CORE__FERNET_KEY=9Jlfqoi1i3-qDjml8mnWWU7WIPy_YCsAk76tiJ2ZFCs=
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./tmp:/tmp
+
+    ports:
+      - "8080:8080"
+    command: webserver
+
+  scheduler:
+    build: .
+    restart: always
+    depends_on:
+      - webserver
+      - postgres
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+      - AIRFLOW__CORE__FERNET_KEY=9Jlfqoi1i3-qDjml8mnWWU7WIPy_YCsAk76tiJ2ZFCs=
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./tmp:/tmp
+    command: scheduler
+
+  airflow-init:
+    build: .
+    depends_on:
+      - postgres
+    environment:
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+      - DBT_KEY_PATH=/home/airflow/.dbt/rsa_key_pk8.pem
+      - AIRFLOW__CORE__FERNET_KEY=9Jlfqoi1i3-qDjml8mnWWU7WIPy_YCsAk76tiJ2ZFCs=
+
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+    command: bash -c "airflow db init"

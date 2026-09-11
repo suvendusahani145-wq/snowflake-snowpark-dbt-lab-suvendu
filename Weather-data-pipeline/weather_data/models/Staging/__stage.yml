@@ -1,0 +1,70 @@
+version: 2
+models:
+  - name: Staging_WEATHER_REPORTS
+    description: "This model transforms the raw weather reports data into a staging format."
+    columns:
+      - name: RAW_PAYLOAD_HASH
+        description: "The raw JSON payload of the weather report."
+      - name: base
+        description: "The base of the weather report."
+      - name: clouds_all
+        description: "The cloud information of the weather report."
+      - name: cod
+        description: "The cod of the weather report."
+      - name: coord_lat
+        description: "The latitude coordinate of the weather report."
+      - name: coord_lon
+        description: "The longitude coordinate of the weather report."
+        tests: 
+          - not_null
+      - name: dt
+        description: "The date and time of the weather report."
+      - name: id
+        description: "The ID of the weather report."
+      - name: main_feels_like
+        description: "The feels like temperature of the weather report."
+      - name: main_grnd_level
+        description: "The ground level pressure of the weather report."
+      - name: main_humidity
+        description: "The humidity of the weather report."
+      - name: main_pressure
+        description: "The pressure of the weather report."
+      - name: main_sea_level
+        description: "The sea level pressure of the weather report."
+      - name: main_temp
+        description: "The temperature of the weather report."
+      - name: main_temp_max
+        description: "The maximum temperature of the weather report."
+      - name: main_temp_min
+        description: "The minimum temperature of the weather report."
+      - name: city_name
+        description: "The name of the city for which the weather report is provided." 
+      - name: sys_country
+        description: "The country code of the weather report."
+      - name: sys_id
+        description: "The system ID of the weather report."
+      - name: sys_sunrise
+        description: "The sunrise time of the weather report."  
+      - name: sys_sunset
+        description: "The sunset time of the weather report."
+      - name: sys_type
+        description: "The system type of the weather report."
+      - name: timezone
+        description: "The timezone of the weather report."
+      - name: visibility
+        description: "The visibility of the weather report."  
+      - name: weather_description
+        description: "The description of the weather condition."
+      - name: weather_icon
+        description: "The icon representing the weather condition."
+      - name: weather_id
+        description: "The ID of the weather condition."
+      - name: weather_main
+        description: "The main weather condition."
+      - name: wind_deg
+        description: "The wind direction in degrees."
+      - name: wind_gust
+        description: "The wind gust speed."
+      - name: wind_speed
+        description: "The wind speed."
+      

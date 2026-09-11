@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: RAW
+    description: "This is the source table for raw weather reports."
+    database: WEATHER_DB
+    schema: RAW
+    tables:
+      - name: RAW_WEATHER_REPORTS
+        description: "This table contains raw weather reports data."
+        columns:
+            - name: RAW_PAYLOAD
+              description: "The raw JSON payload of the weather report."
+            - name: CITY_NAME
+              description: "The name of the city for which the weather report is provided."

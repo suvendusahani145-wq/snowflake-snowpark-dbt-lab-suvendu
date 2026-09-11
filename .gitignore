@@ -15,11 +15,14 @@ __pycache__/
 # Large Full Datasets (>100MB)
 *_full.csv
 
-# Logs & DBT Build Targets
+# Logs & DBT Build Targets & Airflow local state
 target/
 **/target/
 **/dbt_packages/
 *.log
+**/logs/
+**/pgdata/
+**/tmp/
 
 # OS & IDE Files
 .DS_Store

@@ -1,0 +1,2 @@
+coord,weather,base,main,visibility,wind,clouds,dt,sys,timezone,id,name,cod
+"{'lon': 78.4744, 'lat': 17.3753}","[{'id': 803, 'main': 'Clouds', 'description': 'broken clouds', 'icon': '04d'}]",stations,"{'temp': 305.97, 'feels_like': 310.87, 'temp_min': 304.88, 'temp_max': 306.7, 'pressure': 1011, 'humidity': 56, 'sea_level': 1011, 'grnd_level': 945}",10000,"{'speed': 34.32, 'deg': 0, 'gust': 34.32}",{'all': 56},1788858701,"{'type': 1, 'id': 9214, 'country': 'IN', 'sunrise': 1788827600, 'sunset': 1788872095}",19800,1269843,Hyderabad,200
