@@ -1,38 +1,50 @@
-{{config(
-         materialized= 'incremental',
-         unique_key= 'RAW_PAYLOAD_HASH',
-         incremental_strategy= 'merge'
-)}}
+{{ config(
+    materialized = 'incremental',
+    unique_key = ['city_id', 'weather_dt'],
+    incremental_strategy = 'merge'
+) }}
 
-select md5(RAW_PAYLOAD::string) as RAW_PAYLOAD_HASH,
-       RAW_PAYLOAD:base::varchar as base,
-       RAW_PAYLOAD:clouds.all::number as clouds_all,
-       RAW_PAYLOAD:cod::number as cod,
-       RAW_PAYLOAD:coord.lat::number(9,4) as coord_lat,
-       RAW_PAYLOAD:coord.lon::number(10,6) as coord_lon,
-       RAW_PAYLOAD:dt::number as dt,
-       RAW_PAYLOAD:id::number as id,
-       RAW_PAYLOAD:main.feels_like::number as main_feels_like,
-       RAW_PAYLOAD:main.grnd_level::number as main_grnd_level,
-       RAW_PAYLOAD:main.humidity::number as main_humidity,
-       RAW_PAYLOAD:main.pressure::number as main_pressure,
-       RAW_PAYLOAD:main.sea_level::number as main_sea_level,
-       RAW_PAYLOAD:main.temp::number as main_temp,
-       RAW_PAYLOAD:main.temp_max::number as main_temp_max,
-       RAW_PAYLOAD:main.temp_min::number as main_temp_min,
-       RAW_PAYLOAD:name::varchar as city_name,
-       RAW_PAYLOAD:sys.country::varchar as sys_country,
-       RAW_PAYLOAD:sys.id::number as sys_id,
-       RAW_PAYLOAD:sys.sunrise::number as sys_sunrise,
-       RAW_PAYLOAD:sys.sunset::number as sys_sunset,
-       RAW_PAYLOAD:sys.type::number as sys_type,
-       RAW_PAYLOAD:timezone::number as timezone,
-       RAW_PAYLOAD:visibility::number as visibility,
-       RAW_PAYLOAD:weather[0].description::varchar as weather_description,
-       RAW_PAYLOAD:weather[0].icon::varchar as weather_icon,
-       RAW_PAYLOAD:weather[0].id::number as weather_id,
-       RAW_PAYLOAD:weather[0].main::varchar as weather_main,
-       RAW_PAYLOAD:wind.deg::number as wind_deg,
-       RAW_PAYLOAD:wind.gust::number as wind_gust,
-       RAW_PAYLOAD:wind.speed::number as wind_speed
-       from {{ source('RAW', 'RAW_WEATHER_REPORTS') }}  
+with parsed_raw_data as (
+    select 
+        md5(RAW_PAYLOAD::string) as RAW_PAYLOAD_HASH,
+        RAW_PAYLOAD:base::varchar as base,
+        RAW_PAYLOAD:clouds.all::number as clouds_all,
+        RAW_PAYLOAD:cod::number as cod,
+        RAW_PAYLOAD:coord.lat::number(9,4) as coord_lat,
+        RAW_PAYLOAD:coord.lon::number(9,6) as coord_lon,
+        to_timestamp_ntz(RAW_PAYLOAD:dt::number) as weather_dt,
+        RAW_PAYLOAD:id::number as city_id,
+        RAW_PAYLOAD:main.feels_like::number(5,2) as main_feels_like,
+        RAW_PAYLOAD:main.grnd_level::number as main_grnd_level,
+        RAW_PAYLOAD:main.humidity::number as main_humidity,
+        RAW_PAYLOAD:main.pressure::number as main_pressure,
+        RAW_PAYLOAD:main.sea_level::number as main_sea_level,
+        RAW_PAYLOAD:main.temp::number(5,2) as main_temp,
+        RAW_PAYLOAD:main.temp_max::number(5,2) as main_temp_max,
+        RAW_PAYLOAD:main.temp_min::number(5,2) as main_temp_min,
+        RAW_PAYLOAD:name::varchar as city_name,
+        RAW_PAYLOAD:sys.country::varchar as sys_country,
+        RAW_PAYLOAD:sys.id::number as sys_id,
+        RAW_PAYLOAD:sys.sunrise::number as sys_sunrise,
+        RAW_PAYLOAD:sys.sunset::number as sys_sunset,
+        RAW_PAYLOAD:sys.type::number as sys_type,
+        RAW_PAYLOAD:timezone::number as timezone,
+        RAW_PAYLOAD:visibility::number as visibility,
+        RAW_PAYLOAD:weather[0].description::varchar as weather_description,
+        RAW_PAYLOAD:weather[0].icon::varchar as weather_icon,
+        RAW_PAYLOAD:weather[0].id::number as weather_id,
+        RAW_PAYLOAD:weather[0].main::varchar as weather_main,
+        RAW_PAYLOAD:wind.deg::number as wind_deg,
+        RAW_PAYLOAD:wind.gust::number(5,2) as wind_gust,
+        RAW_PAYLOAD:wind.speed::number(5,2) as wind_speed
+    from {{ source('RAW', 'RAW_WEATHER_REPORTS') }}
+
+    {% if is_incremental() %}
+        where to_timestamp_ntz(RAW_PAYLOAD:dt::number) > (select max(weather_dt) from {{ this }})
+    {% endif %}
+    
+    qualify row_number() over (partition by RAW_PAYLOAD:id::number, to_timestamp_ntz(RAW_PAYLOAD:dt::number) order by to_timestamp_ntz(RAW_PAYLOAD:dt::number) desc) = 1
+)
+
+select *
+from parsed_raw_data

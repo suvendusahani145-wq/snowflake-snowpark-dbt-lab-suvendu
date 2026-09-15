@@ -18,11 +18,13 @@ services:
       - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
       - AIRFLOW__CORE__FERNET_KEY=9Jlfqoi1i3-qDjml8mnWWU7WIPy_YCsAk76tiJ2ZFCs=
       - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - DBT_KEY_PATH=/home/airflow/.dbt/rsa_key_pk8.pem
 
     volumes:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
-      - ./tmp:/tmp
+      - C:/Snowflake Projects/Weather-data-pipeline/weather_data:/opt/weather_data
+      - C:/Users/suven/.dbt:/home/airflow/.dbt
 
     ports:
       - "8080:8080"
@@ -38,10 +40,12 @@ services:
       - AIRFLOW__CORE__EXECUTOR=LocalExecutor
       - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
       - AIRFLOW__CORE__FERNET_KEY=9Jlfqoi1i3-qDjml8mnWWU7WIPy_YCsAk76tiJ2ZFCs=
+      - DBT_KEY_PATH=/home/airflow/.dbt/rsa_key_pk8.pem
     volumes:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
-      - ./tmp:/tmp
+      - C:/Snowflake Projects/Weather-data-pipeline/weather_data:/opt/weather_data
+      - C:/Users/suven/.dbt:/home/airflow/.dbt
     command: scheduler
 
   airflow-init:
@@ -52,8 +56,9 @@ services:
       - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
       - DBT_KEY_PATH=/home/airflow/.dbt/rsa_key_pk8.pem
       - AIRFLOW__CORE__FERNET_KEY=9Jlfqoi1i3-qDjml8mnWWU7WIPy_YCsAk76tiJ2ZFCs=
-
     volumes:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
+      - C:/Snowflake Projects/Weather-data-pipeline/weather_data:/opt/weather_data
+      - C:/Users/suven/.dbt:/home/airflow/.dbt
     command: bash -c "airflow db init"

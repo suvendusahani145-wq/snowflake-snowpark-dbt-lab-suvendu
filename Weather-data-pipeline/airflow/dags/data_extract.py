@@ -11,7 +11,7 @@ default_args = {
        'owner': 'suvendu',
        'retries': 2,
        'retry_delay': timedelta(minutes=5),
-       'email': ['suvendusajani543@gmail.com'],
+       'email': ['suvendusahani543@gmail.com'],
        'email_on_retry': True,
        'email_on_failure' : True,
        'depends_on_past': False
@@ -24,9 +24,7 @@ def extract_api_data(**context):
      pd.DataFrame([data]).to_csv("/tmp/tmp_weather.csv",index=False)
      context['ti'].xcom_push(key='raw_path',value="/tmp/tmp_weather.csv")
 
-def load_to_db(**context):
-    conn = BaseHook.get_connection("snowflake_conn")
-    print(f"Loading data to Snowflake at {conn.host}")
+
 
     
 with DAG(

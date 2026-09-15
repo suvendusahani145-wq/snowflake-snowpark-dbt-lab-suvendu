@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: RAW
     description: "This is the source table for raw weather reports."
-    database: WEATHER_DB
+    database: WEATHER
     schema: RAW
     tables:
       - name: RAW_WEATHER_REPORTS

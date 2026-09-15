@@ -1,6 +1,6 @@
 {{config(
          materialized= 'incremental',
-         unique_key= 'RAW_PAYLOAD_HASH',
+         unique_key= ['city_name','weather_dt'],
          incremental_strategy= 'merge'
 )}}
 
@@ -10,9 +10,9 @@ select RAW_PAYLOAD_HASH,
        cod,
        coord_lat,
        coord_lon,
-       to_timestamp_ntz(dt) as weather_dt,
-       id,
-       main_feels_like,
+       weather_dt,
+       city_id,
+       round(main_feels_like-273.15, 2) as main_feels_like_celsius,
        main_grnd_level,
        main_humidity,
        main_pressure,
@@ -36,3 +36,7 @@ select RAW_PAYLOAD_HASH,
        wind_gust,
        wind_speed
        from {{ ref('Bronze_RAW_WEATHER_REPORTS') }}  
+
+       {% if is_incremental() %}
+       where weather_dt > (select max(weather_dt) from {{ this }})
+       {% endif %}

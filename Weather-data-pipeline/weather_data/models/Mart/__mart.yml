@@ -1,0 +1,57 @@
+version: 2
+models:
+  - name: dim_city
+    description: "This model creates a dimension table for cities based on the weather reports data."
+    columns:
+      - name: city_id
+        description: "The unique identifier for the city."
+        tests:
+          - not_null
+          - unique
+      - name: city_name
+        description: "The name of the city."
+      - name: country
+        description: "The country code of the city."
+      - name: lat
+        description: "The latitude coordinate of the city."
+      - name: lon
+        description: "The longitude coordinate of the city."
+
+  - name: fct_weather_observations
+    description: "This model creates a fact table for weather observations based on the weather reports data."
+    columns:
+      - name: observation_id
+        description: "The unique identifier for the weather observation."
+        tests:
+          - not_null
+          - unique
+      - name: city_id
+        description: "The unique identifier for the city associated with the weather observation."
+        tests:
+          - not_null
+      - name: observation_dt_UTC
+        description: "The date and time of the weather observation in UTC."
+        tests:
+          - not_null
+      - name: observation_dt_ist
+        description: "The date and time of the weather observation in local time."
+        tests:
+          - not_null
+      - name: feels_like_celsius
+        description: "The 'feels like' temperature in Celsius."
+      - name: temp_celsius
+        description: "The actual temperature in Celsius."
+      - name: temp_max_celsius
+        description: "The maximum temperature in Celsius."
+      - name: temp_min_celsius
+        description: "The minimum temperature in Celsius."
+      - name: humidity
+        description: "The humidity percentage."
+      - name: pressure
+        description: "The atmospheric pressure in hPa."
+      - name: wind_speed
+        description: "The wind speed in m/s."
+      - name: wind_direction
+        description: "The wind direction in degrees."
+      - name: day_night_flag
+        description: "A flag indicating whether the observation was made during the day or night."
