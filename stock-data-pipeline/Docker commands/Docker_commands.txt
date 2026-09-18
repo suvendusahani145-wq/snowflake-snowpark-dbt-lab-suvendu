@@ -1,0 +1,59 @@
+# Check running containers
+docker ps
+
+# Check all containers (running + stopped)
+docker ps -a
+
+# Start Zookeeper
+docker start zookeeper
+
+# Check Kafka logs
+docker logs kafka
+
+# Check Kafka environment variables
+docker exec -it kafka printenv
+
+# Check broker configuration
+docker exec -it kafka kafka-configs --bootstrap-server localhost:9092 --entity-type brokers --entity-name 1 --describe
+
+# List Kafka topics
+docker exec -it kafka kafka-topics --bootstrap-server localhost:9092 --list
+
+# Create Kafka topic
+docker exec -it kafka kafka-topics --create --topic stock_tricks --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+
+# Remove old Kafka container
+docker rm -f kafka
+
+# Inspect Zookeeper container
+docker inspect zookeeper
+
+# Create Kafka container on same Docker network
+docker run -d --name kafka `
+--network debezium-lab_default `
+-p 9092:9092 `
+-e KAFKA_BROKER_ID=1 `
+-e KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 `
+-e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092 `
+-e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 `
+-e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 `
+GRANT OPERATE ON WAREHOUSE STOCK_WH TO ROLE STOCK_ROLE;confluentinc/cp-kafka:7.6.1
+
+# Verify Kafka advertised listener
+docker exec -it kafka printenv
+
+# Create topic again after recreating Kafka
+docker exec -it kafka kafka-topics --create `
+--topic stock_tricks `
+--bootstrap-server localhost:9092 `
+--partitions 1 `
+--replication-factor 1
+
+# Verify topic exists
+docker exec -it kafka kafka-topics --bootstrap-server localhost:9092 --list
+
+# Consume messages from Kafka topic
+docker exec -it kafka kafka-console-consumer `
+--bootstrap-server localhost:9092 `
+--topic stock_tricks `
+--from-beginning

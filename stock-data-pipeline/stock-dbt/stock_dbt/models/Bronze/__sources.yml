@@ -1,0 +1,51 @@
+version:  2
+sources:
+ - name: RAW
+   description: "stock data details"
+   database: STOCK_DB
+   schema: RAW
+
+
+   tables: 
+      - name : DIM_SYMBOLS
+        description: "Stores the stock symbol details"
+        columns:
+          - name: CURRENCY
+            description: "The currency of the stock"
+          - name: DESCRIPTION
+            description: "stores stock descriptions"
+          - name: DISPLAYSYMBOL
+            description: "Display symbol of the stock"
+          - name: "FIGI"
+          - name: "FIGICOMPOSITE"
+          - name: "ISIN"
+          - name: "MIC"
+          - name: "SHARECLASSFGI"
+          - name: "SYMBOL"
+          - name: "SYMBOL2"
+          - name: "TYPE"
+
+
+      - name: STOCK_TRADES
+        description: "stores the quotes of the stocks"
+        columns:
+          - name: ID
+            description: "Unique identification of the extracted quotes"
+          - name: TYPE
+            description: "stores the transaction type"
+          - name: SYMBOL
+            description: "stock symbol"
+            tests:
+              - not null
+              - realtionships:
+                    to: ref("DIM_SYMBOLS")
+                    field: SYMBOL
+          - name: PRICE
+            description: "stores the traded price"
+          - name: VOLUME
+            description: "stores the trade volume"
+          - name: TRADE_TIMESTAMP
+            description: "stores the trade timestamp"
+          - name: TRADE_CONDITIONS
+            description: "stores the trade conditions"
+          
