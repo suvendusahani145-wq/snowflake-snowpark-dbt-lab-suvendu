@@ -1,3 +1,7 @@
+{{ config(
+    materialized='table',
+    schema='MART'
+) }}
 select 
     city,
     count(*) as total_orders,

@@ -1,0 +1,70 @@
+version: 2
+models:
+  - name: fct_customer_data
+    description: "This table contains customer data with demographic information and their associated restaurant."
+    columns:
+      - name: order_id
+        description: "Unique identifier for each order."
+      - name: customer_id
+        description: "Unique identifier for each customer."
+      - name: customer_name
+        description: "Name of the customer."
+      - name: age
+        description: "Age of the customer."
+      - name: gender
+  - name: dim_restaurant
+    description: "This table contains restaurant data with their details."
+    columns:
+      - name: restaurant_id
+        description: "Unique identifier for each restaurant."
+      - name: restaurant_name
+        description: "Name of the restaurant."
+      - name: city
+        description: "City where the restaurant is located."
+      - name: cuisine
+        description: "Type of cuisine offered by the restaurant."
+  - name: fct_orders
+    description: "This table contains order data with details about each order."
+    columns:
+      - name: order_id
+        description: "Unique identifier for each order."
+      - name: order_timestamp
+        description: "Timestamp when the order was placed."
+      - name: order_date
+        description: "Date when the order was placed."
+      - name: customer_id
+        description: "Unique identifier for each customer."
+      - name: restaurant_id
+        description: "Unique identifier for each restaurant."
+        tests:
+        - relationships:
+            to: ref('dim_restaurant')
+            field: restaurant_id
+      - name: city
+        description: "City where the order was placed."
+      - name: cuisine
+        description: "Type of cuisine ordered."
+      - name: payment_method
+        description: "Payment method used for the order."
+      - name: order_status
+        description: "Status of the order (e.g., completed, cancelled)."
+      - name: is_delivered
+        description: "Indicates whether the order was delivered or not."
+      - name: items_count
+        description: "Number of items in the order."
+      - name: sales_qty
+        description: "Total quantity of items sold in the order."
+      - name: subtotal
+        description: "Subtotal amount for the order before discounts and taxes."
+      - name: discount
+        description: "Discount applied to the order."
+      - name: delivery_fee
+        description: "Delivery fee charged for the order."
+      - name: gst
+        description: "Goods and Services Tax applied to the order."
+      - name: sales_amount
+        description: "Total sales amount for the order after discounts and taxes."
+      - name: customer_rating
+        description: "Rating given by the customer for the order."
+      - name: delivery_time_min
+        description: "Time taken for delivery in minutes."

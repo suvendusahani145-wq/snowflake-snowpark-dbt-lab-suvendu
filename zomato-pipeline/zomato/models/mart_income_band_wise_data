@@ -1,0 +1,3 @@
+select income_band,count(*) as Total_orders
+from {{ ref('fct_customer_data') }}
+group by income_band;
