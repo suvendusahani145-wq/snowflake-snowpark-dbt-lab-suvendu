@@ -1,1 +1,10 @@
-select food_id, food_name, veg_or_non_veg from {{ ref('stg_food') }}
+{{ config(
+    materialized='table',
+    schema='MART'
+) }}
+
+select
+    food_id,
+    food_name,
+    veg_or_non_veg
+from {{ ref('stg_food') }}

@@ -1,3 +1,8 @@
+{{ config(
+    materialized='table',
+    schema='MART'
+) }}
+
 select RESTAURANT_ID,
        RESTAURANT_NAME,
        CITY,

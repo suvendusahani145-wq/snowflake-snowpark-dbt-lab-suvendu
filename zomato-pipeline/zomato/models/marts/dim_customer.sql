@@ -1,3 +1,8 @@
+{{ config(
+    materialized='table',
+    schema='MART'
+) }}
+
 select
 customer_id,
 customer_name,
