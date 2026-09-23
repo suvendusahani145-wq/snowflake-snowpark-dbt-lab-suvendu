@@ -1,5 +1,5 @@
 {{config(materialized= 'incremental', 
-          schema= 'staging',
+          schema= 'stage',
           unique_key= 'INTERVIEW_KEY',
           incremental_strategy= 'merge')}}
 
@@ -26,5 +26,7 @@ SELECT
        L1_FEEDBACK,
        L2_FEEDBACK,
        COMMENTS,
-       ACTION_ITEM
+       ACTION_ITEM,
+       ONBOARDING_STATUS,
+       PANEL_EMAIL_ID
 FROM {{ ref('Bronze_INTERVIEW_PANEL_DATA') }}

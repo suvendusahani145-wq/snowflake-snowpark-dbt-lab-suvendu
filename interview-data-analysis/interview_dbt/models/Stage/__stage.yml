@@ -33,3 +33,5 @@ models:
          - name: L2_FEEDBACK
          - name: COMMENTS
          - name: ACTION_ITEM
+         - name: ONBOARDING_STATUS
+         - name: PANEL_EMAIL_ID

@@ -29,3 +29,7 @@ sources:
                - name: CUSTOMER_ROUND_STATUS
                - name: L1_FEEDBACK
                - name: L2_FEEDBACK
+               - name: COMMENTS
+               - name: ACTION_ITEM
+               - name: ONBOARDING_STATUS
+               - name: PANEL_EMAIL_ID
