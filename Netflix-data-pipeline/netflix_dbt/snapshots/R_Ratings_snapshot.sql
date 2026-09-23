@@ -8,6 +8,6 @@
 }}
 
 select * 
-from {{ source('Bronze','R_RATINGS') }}
+from {{ source('RAW','R_RATINGS') }}
 
 {% endsnapshot %}

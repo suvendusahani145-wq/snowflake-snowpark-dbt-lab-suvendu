@@ -1,0 +1,9 @@
+models: 
+     - name: fact_panel_performance
+       columns:
+         - name: PANEL_NAME
+         - name: INTERVIEW_YEAR
+         - name: INTERVIEW_MONTH
+         - name: NUMBER_OF_INTERVIEWS
+         - name: NUMBER_OF_CANDIDATE_REJECTED
+         - name: NUMBER_OF_CANDIDATE_SELECTED

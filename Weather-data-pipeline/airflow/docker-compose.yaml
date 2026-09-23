@@ -23,11 +23,11 @@ services:
     volumes:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
-      - C:/Snowflake Projects/Weather-data-pipeline/weather_data:/opt/weather_data
-      - C:/Users/suven/.dbt:/home/airflow/.dbt
+      - C:/Users/Suvendu/Desktop/git-snowflake-projects/snowflake-snowpark-dbt-lab-suvendu/Weather-data-pipeline/weather_data:/opt/weather_data
+      - C:/Users/Suvendu/.dbt:/home/airflow/.dbt
 
     ports:
-      - "8080:8080"
+      - "8085:8080"
     command: webserver
 
   scheduler:
@@ -44,8 +44,8 @@ services:
     volumes:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
-      - C:/Snowflake Projects/Weather-data-pipeline/weather_data:/opt/weather_data
-      - C:/Users/suven/.dbt:/home/airflow/.dbt
+      - C:/Users/Suvendu/Desktop/git-snowflake-projects/snowflake-snowpark-dbt-lab-suvendu/Weather-data-pipeline/weather_data:/opt/weather_data
+      - C:/Users/Suvendu/.dbt:/home/airflow/.dbt
     command: scheduler
 
   airflow-init:
@@ -59,6 +59,6 @@ services:
     volumes:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
-      - C:/Snowflake Projects/Weather-data-pipeline/weather_data:/opt/weather_data
-      - C:/Users/suven/.dbt:/home/airflow/.dbt
+      - C:/Users/Suvendu/Desktop/git-snowflake-projects/snowflake-snowpark-dbt-lab-suvendu/Weather-data-pipeline/weather_data:/opt/weather_data
+      - C:/Users/Suvendu/.dbt:/home/airflow/.dbt
     command: bash -c "airflow db init"

@@ -1,0 +1,31 @@
+version: 2
+
+sources:
+  - name: RAW
+    database: NETFLIX
+    schema: RAW
+
+    tables:
+      - name: R_MOVIES
+        description: "This table stores the movie details"
+
+        columns:
+          - name: MOVIEID
+            tests:
+              - not_null
+              - unique
+
+      - name: R_RATINGS
+        description: "This table stores movie ratings"
+
+      - name: r_genome_tags
+        description: "This table stores tag detail"
+
+      - name: R_GENOME_SCORES
+        description: "This table stores movie and tag relevance detail"
+
+      - name: R_TAGS
+        description: "This table stores user, movie and tag related data"
+      
+      - name: R_LINKS
+        description: "stores external rating link id"

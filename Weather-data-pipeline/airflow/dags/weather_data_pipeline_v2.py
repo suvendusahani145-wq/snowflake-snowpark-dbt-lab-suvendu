@@ -11,5 +11,5 @@ with DAG(
 
     dbt_run = BashOperator(
         task_id="dbt_run",
-        bash_command="cd /opt/weather_data && /home/airflow/.local/bin/dbt run --fail-fast || exit 1"
+        bash_command="cd /opt/weather_data && dbt build --profiles-dir /home/airflow/.dbt --fail-fast || exit 1"
     )

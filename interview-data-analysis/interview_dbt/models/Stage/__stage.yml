@@ -1,0 +1,35 @@
+models: 
+     - name: stg_PANEL_AVAILABILITY
+       columns:
+         - name: PANEL_NAME
+         - name: EMAIL_ID
+           tests:
+             - not_null
+         - name: AVAILABILITY_STATUS
+         - name: AVAILABILITY_CATEGORY
+         - name: INTERVIEW_DATE
+
+     - name: stg_INTERVIEW_PANEL_DATA
+       columns:
+         - name: INTERVIEW_KEY
+         - name: CANDIDATE_NAME
+         - name: GROUP_NAME
+         - name: DEMAND
+         - name: EXPERIENCE_YEARS
+         - name: EXPERIENCE_BAND
+         - name: PROFILE_SHARED_BY
+         - name: CONTACT_DETAILS
+         - name: CANDIDATE_EMAIL_ID
+         - name: CANNDIATE_MOBILE
+         - name: ASSIGNED_DATE
+         - name: EVALUATION_DATE_TIME
+         - name: PANEL_NAME
+           tests:
+             - not_null
+         - name: L1_STATUS
+         - name: L2_STATUS
+         - name: CUSTOMER_ROUND_STATUS
+         - name: L1_FEEDBACK
+         - name: L2_FEEDBACK
+         - name: COMMENTS
+         - name: ACTION_ITEM

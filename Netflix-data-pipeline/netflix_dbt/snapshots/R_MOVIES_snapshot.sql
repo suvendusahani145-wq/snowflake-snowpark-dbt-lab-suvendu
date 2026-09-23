@@ -11,7 +11,7 @@
 
 
 select *
-from {{ source('Bronze', 'R_MOVIES') }}
+from {{ source('RAW', 'R_MOVIES') }}
 
 
 {% endsnapshot %}

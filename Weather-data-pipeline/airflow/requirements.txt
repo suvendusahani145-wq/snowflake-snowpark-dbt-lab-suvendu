@@ -1,1 +1,2 @@
-apache-airflow-providers-snowflake
+apache-airflow-providers-snowflake==5.4.0
+dbt-snowflake

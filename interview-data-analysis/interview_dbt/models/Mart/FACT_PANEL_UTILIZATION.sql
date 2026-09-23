@@ -1,0 +1,41 @@
+{{config(schema= 'Mart')}}
+
+WITH panel_data AS (
+    SELECT
+        TO_CHAR(INTERVIEW_DATE, 'MON-YYYY') AS INTERVIEW_MONTH,
+        PANELIST_NAME,
+        SUM(
+            CASE
+                WHEN AVAILABILITY_CATEGORY IN ('AVAILABLE','TENTATIVE')
+                THEN 1
+                ELSE 0
+            END
+        ) AS TOTAL_AVAILABILITY
+    FROM {{ ref('stg_PANEL_AVAILABILITY') }}
+    GROUP BY 1,2
+),
+
+fp_data AS (
+    SELECT
+        INTERVIEW_MONTH,
+        TRIM(f.VALUE::STRING) AS PANEL_NAME,
+        NUMBER_OF_INTERVIEWS
+    FROM {{ ref('fact_panel_performance') }} fp,
+         LATERAL FLATTEN(
+             INPUT => SPLIT(fp.PANEL_NAME,'&')
+         ) f
+)
+
+SELECT
+    COALESCE(pa.INTERVIEW_MONTH,fp.INTERVIEW_MONTH) AS INTERVIEW_MONTH,
+    pa.PANELIST_NAME,
+    fp.PANEL_NAME,
+    COALESCE(fp.PANEL_NAME,pa.PANELIST_NAME) AS PANEL_NAME_DERIVED,
+    NVL(pa.TOTAL_AVAILABILITY,0) AS TOTAL_AVAILABILITY,
+    NVL(fp.NUMBER_OF_INTERVIEWS,0) AS NUMBER_OF_INTERVIEWS,
+   
+FROM panel_data pa
+FULL JOIN fp_data fp
+ON pa.INTERVIEW_MONTH = fp.INTERVIEW_MONTH
+AND UPPER(REGEXP_SUBSTR(fp.PANEL_NAME,'[A-Za-z]+',1,1))
+    = UPPER(REGEXP_SUBSTR(pa.PANELIST_NAME,'[A-Za-z]+',1,1))

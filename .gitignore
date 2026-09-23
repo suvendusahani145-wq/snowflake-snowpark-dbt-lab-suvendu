@@ -9,6 +9,8 @@ __pycache__/
 # Security & Credentials - Exclude private keys
 *.pem
 *.key
+*.p8
+*.pub
 .env
 .env.*
 

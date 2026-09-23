@@ -12,12 +12,11 @@ def model(dbt, session):
               
     fct_dbt= dbt.ref("fct_weather_observations")
     
-    window_spec = Window.partition_by("CITY_ID").order_by(col("OBSERVATION_DT_IST")).rows_between(-2, Window.CURRENT_ROW)
-    
+    window_spec = Window.partition_by("CITY_ID").order_by(col("OBSERVATION_DT_IST"))    
     window_city_overall= Window.partition_by(col("CITY_ID"))
     
-    window_df= fct_dbt.with_column("date_wise_observation",F.row_number().over(window_spec))
-    window_upd_df= fct_dbt.with_column("city_average",F.avg("TEMP_CELSIUS").over(window_city_overall))
+    window_upd_df= fct_dbt.with_column("Observation_seq",F.row_number().over(window_spec)).with_column("city_average",F.avg("TEMP_CELSIUS").over(window_city_overall))
+    
     
     return window_upd_df
     

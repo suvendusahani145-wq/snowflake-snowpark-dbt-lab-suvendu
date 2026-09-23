@@ -10,4 +10,4 @@ select
         else 'OTHER'
     end as tag_category
 
-from {{ ref('Bronze_R_GENOME_TAGS') }}
+from {{ ref('Bronze_r_genome_tags') }}

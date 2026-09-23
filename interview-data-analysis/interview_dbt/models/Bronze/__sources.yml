@@ -1,0 +1,31 @@
+version: 2
+sources:
+      - name: RAW
+        database: INTERVIEW
+        schema: RAW
+        tables:
+          - name: PANEL_AVAILABILITY
+            columns:
+              - name: PANEL_NAME
+                description: 'stores interviewer name'
+              - name: EMAIL_ID
+              - name: AVAILABILITY_STATUS
+              - name: INTERVIEW_DATE
+              - name: AVAILABILITY_STATUS
+
+          - name: INTERVIEW_PANEL_DATA
+            columns: 
+               - name: CANDIDATE_NAME
+               - name: GROUP_NAME
+               - name: DEMAND
+               - name: EXPERIENCE_YEARS
+               - name: PROFILE_SHARED_BY
+               - name: CONTACT_DETAILS
+               - name: ASSIGNED_DATE
+               - name: EVALUATION_DATE_TIME
+               - name: PANEL_NAME
+               - name: L1_STATUS
+               - name: L2_STATUS
+               - name: CUSTOMER_ROUND_STATUS
+               - name: L1_FEEDBACK
+               - name: L2_FEEDBACK

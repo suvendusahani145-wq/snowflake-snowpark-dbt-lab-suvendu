@@ -23,7 +23,7 @@ models:
           - not_null
           - positive_rating
           - test_rating
-    columns:
-       - name : rating_date
-         tests:
+
+      - name : rating_date
+        tests:
            - no_future_rating
